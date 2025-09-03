@@ -16,10 +16,17 @@ jobs:
     runs-on: windows-2025
 
     steps:
+    - name: Install ccache
+      uses: ggml-org/ccache-action@main
+      with:
+        key: windows-cuda-12.4
+        variant: ccache
+        evict-old-files: 1d
+    
     - name: Install Cuda Toolkit
       shell: pwsh
       run: |
-          mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0"
+          mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4"
           choco install unzip -y
           curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/windows-x86_64/cuda_cudart-windows-x86_64-12.4.127-archive.zip"
           curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-12.4.131-archive.zip"
