@@ -35,7 +35,7 @@ jobs:
         echo "curl_path=$env:RUNNER_TEMP/libcurl" >> $env:GITHUB_OUTPUT
     
     - name: Install Cuda Toolkit
-      shell: powershell
+      shell: pwsh
       run: |
           mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4"
           choco install unzip -y
