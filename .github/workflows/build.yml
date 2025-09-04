@@ -80,6 +80,7 @@ jobs:
           -DGGML_NATIVE=OFF ^
           -DGGML_CPU=OFF ^
           -DGGML_CUDA=ON ^
+          -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-real;89-real;90-virtual;100-virtual;120-real" ^
           -DLLAMA_CURL=OFF
         set /A NINJA_JOBS=%NUMBER_OF_PROCESSORS%-1
         cmake --build build --config Release -j %NINJA_JOBS% --target ggml-cuda
