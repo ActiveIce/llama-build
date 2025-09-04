@@ -40,7 +40,7 @@ jobs:
           mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0"
           choco install unzip -y
           curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/windows-x86_64/cuda_cudart-windows-x86_64-12.4.127-archive.zip"
-          curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-12.4.131-archive.zip"
+          curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-13.0.88-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/windows-x86_64/cuda_nvrtc-windows-x86_64-12.4.127-archive.zip"
           curl -O "https://developer.download.nvidia.com/compute/cuda/redist/libcublas/windows-x86_64/libcublas-windows-x86_64-12.4.5.8-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/windows-x86_64/cuda_nvtx-windows-x86_64-12.4.127-archive.zip"
@@ -50,7 +50,7 @@ jobs:
           curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/windows-x86_64/cuda_cccl-windows-x86_64-12.4.127-archive.zip"
           unzip '*.zip' -d "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0"
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cudart-windows-x86_64-12.4.127-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_nvcc-windows-x86_64-12.4.131-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_nvcc-windows-x86_64-13.0.88-archive.zip\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\cuda_nvrtc-windows-x86_64-12.4.127-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4" /E /I /H /Y
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libcublas-windows-x86_64-12.4.5.8-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4\cuda_nvtx-windows-x86_64-12.4.127-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4" /E /I /H /Y
