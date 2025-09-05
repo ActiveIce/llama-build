@@ -68,6 +68,7 @@ jobs:
       env:
           CURL_PATH: ${{ steps.get_libcurl.outputs.curl_path }}
       run: |
+        echo %cd%
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
