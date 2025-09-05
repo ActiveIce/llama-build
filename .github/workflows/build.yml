@@ -69,7 +69,7 @@ jobs:
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
           -DCMAKE_TOOLCHAIN_FILE=cmake/x64-windows-llvm.cmake ^
-          -DGGML_BACKEND_DL=ON ^
+          -DGGML_BACKEND_DL=OFF ^
           -DGGML_NATIVE=OFF ^
           -DGGML_CPU=OFF ^
           -DGGML_CUDA=ON ^
