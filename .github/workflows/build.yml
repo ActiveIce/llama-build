@@ -50,6 +50,7 @@ jobs:
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_nvcc-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libcublas-windows-x86_64-13.0.2.14-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cccl-windows-x86_64-13.0.85-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          echo "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/bin" >> $GITHUB_PATH
           echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
     - name: Install Ninja
       run: |
