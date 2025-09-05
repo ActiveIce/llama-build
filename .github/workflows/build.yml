@@ -19,12 +19,12 @@ jobs:
     - name: Setup cmake
       uses: jwlawson/actions-setup-cmake@master
     
-    #- name: Install ccache
-    #  uses: ggml-org/ccache-action@main
-    #  with:
-    #    key: windows-cuda-12.4
-    #    variant: ccache
-    #    evict-old-files: 1d
+    - name: Install ccache
+      uses: ggml-org/ccache-action@main
+      with:
+        key: windows-cuda-12.4
+        variant: ccache
+        evict-old-files: 1d
     
     - name: libCURL
       shell: powershell
@@ -53,21 +53,22 @@ jobs:
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_nvcc-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libcublas-windows-x86_64-13.0.2.14-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cccl-windows-x86_64-13.0.85-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          echo "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.0/bin" >> $GITHUB_PATH
           echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+    
     - name: Install Ninja
       run: |
         choco install ninja
+    
     - name: Build
       shell: cmd
       run: |
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
-        ::sed -i '/find_package(CUDAToolkit)/a set(CCCL_DIR "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\lib\cmake\cccl CACHE PATH")\nfind_package(CCCL)' ./ggml/src/ggml-cuda/CMakeLists.txt
         sed -i '/find_package(CUDAToolkit)/a find_package(CCCL)' ./ggml/src/ggml-cuda/CMakeLists.txt
         sed -i 's/target_link_libraries(ggml-cuda PRIVATE CUDA::cudart CUDA::cublas)/target_link_libraries(ggml-cuda PRIVATE CUDA::cudart CUDA::cublas CCCL::CCCL)/' ./ggml/src/ggml-cuda/CMakeLists.txt
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
+          -DCMAKE_CUDA_COMPILER="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin\nvcc.exe" ^
           -DCMAKE_PREFIX_PATH="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\lib\cmake\cccl" ^
           -DGGML_BACKEND_DL=ON ^
           -DGGML_NATIVE=OFF ^
