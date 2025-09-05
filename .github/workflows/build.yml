@@ -93,7 +93,7 @@ jobs:
         robocopy "${{env.CUDA_PATH}}\bin\x64" ".\llama.cpp\build\bin\Release\" cudart64_*.dll cublas64_*.dll cublasLt64_*.dll
         if ($lastexitcode -lt 8) {exit 0} else {exit 1}
 
-    - name: Upload Cuda runtime
+    - name: Upload artifacts
       uses: actions/upload-artifact@main
       with:
         path: .\llama.cpp\build\bin\Release\
