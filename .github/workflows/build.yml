@@ -16,6 +16,9 @@ jobs:
     runs-on: windows-2025
 
     steps:
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@master
+    
     - name: Install ccache
       uses: ggml-org/ccache-action@main
       with:
