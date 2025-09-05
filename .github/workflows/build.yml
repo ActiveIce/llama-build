@@ -66,11 +66,8 @@ jobs:
       run: |
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
-        sed -i '/find_package(CUDAToolkit)/a find_package(CCCL)' ./ggml/src/ggml-cuda/CMakeLists.txt
-        sed -i 's/target_link_libraries(ggml-cuda PRIVATE CUDA::cudart CUDA::cublas)/target_link_libraries(ggml-cuda PRIVATE CUDA::cudart CUDA::cublas CCCL::CCCL)/' ./ggml/src/ggml-cuda/CMakeLists.txt
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
-          -DCMAKE_PREFIX_PATH="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\lib\cmake\cccl" ^
           -DGGML_BACKEND_DL=ON ^
           -DGGML_NATIVE=OFF ^
           -DGGML_CPU=OFF ^
