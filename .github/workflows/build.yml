@@ -33,7 +33,7 @@ jobs:
         CURL_VERSION: '8.6.0_6'
         ARCHITECTURE: 'win64'
       run: |
-        echo $pwd
+        Get-Location
         curl.exe -o $env:RUNNER_TEMP\curl.zip -L "https://curl.se/windows/dl-${env:CURL_VERSION}/curl-${env:CURL_VERSION}-${env:ARCHITECTURE}-mingw.zip"
         mkdir $env:RUNNER_TEMP\libcurl
         tar.exe -xvf $env:RUNNER_TEMP\curl.zip --strip-components=1 -C $env:RUNNER_TEMP\libcurl
