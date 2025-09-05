@@ -23,7 +23,7 @@ jobs:
       uses: ggml-org/ccache-action@main
       with:
         key: windows-cuda
-        max-size: 2048M
+        max-size: 512M
         evict-old-files: 1d
     
     - name: libCURL
@@ -91,7 +91,6 @@ jobs:
         Copy-Item $env:CURL_PATH\bin\libcurl-x64.dll .\llama.cpp\build\bin\Release\
         Copy-Item "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\debug_nonredist\x64\Microsoft.VC143.OpenMP.LLVM\libomp140.x86_64.dll" .\llama.cpp\build\bin\Release\
         robocopy "${{env.CUDA_PATH}}\bin\x64" ".\llama.cpp\build\bin\Release\" cudart64_*.dll cublas64_*.dll cublasLt64_*.dll
-        ls .\llama.cpp\build\bin\Release\
         if ($lastexitcode -lt 8) {exit 0} else {exit 1}
 
     - name: Upload Cuda runtime
