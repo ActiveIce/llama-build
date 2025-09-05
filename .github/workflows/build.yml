@@ -97,4 +97,4 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         path: .\llama.cpp\build\bin\Release\
-        name: llama-bin-win-cuda-x64.zip
+        name: llama-bin-win-cuda-x64
