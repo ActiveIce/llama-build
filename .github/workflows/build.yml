@@ -69,6 +69,7 @@ jobs:
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
           -DGGML_NATIVE=OFF ^
+          -DGGML_BACKEND_DL=OFF ^
           -DGGML_CUDA=ON ^
           -DGGML_CUDA_FORCE_CUBLAS=ON ^
           -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;100-virtual;120-real" ^
