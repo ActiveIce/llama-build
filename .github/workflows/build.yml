@@ -51,7 +51,7 @@ jobs:
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libcublas-windows-x86_64-13.0.2.14-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cccl-windows-x86_64-13.0.85-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
           echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
-          echo "CUDA_PATH_V13_0=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          echo "CCCL_DIR=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\include\cccl" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
     - name: Install Ninja
       run: |
@@ -62,7 +62,7 @@ jobs:
       run: |
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
-        sed -i '/find_package(CUDAToolkit)/a find_package(CCCL PATHS "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\include\cccl")' ./ggml/src/ggml-cuda/CMakeLists.txt
+        sed -i '/find_package(CUDAToolkit)/a find_package(CCCL)' ./ggml/src/ggml-cuda/CMakeLists.txt
         sed -i 's/target_link_libraries(ggml-cuda PRIVATE CUDA::cudart CUDA::cublas)/target_link_libraries(ggml-cuda PRIVATE CUDA::cudart CUDA::cublas CCCL::CCCL)/' ./ggml/src/ggml-cuda/CMakeLists.txt
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
