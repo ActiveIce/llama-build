@@ -68,10 +68,10 @@ jobs:
         pushd llama.cpp
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
-          -DGGML_BACKEND_DL=ON ^
           -DGGML_NATIVE=OFF ^
           -DGGML_CPU=OFF ^
           -DGGML_CUDA=ON ^
+          -DGGML_CUDA_FORCE_CUBLAS=ON ^
           -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;100-virtual;120-real" ^
           -DCURL_LIBRARY="$env:RUNNER_TEMP/libcurl/lib/libcurl.dll.a" -DCURL_INCLUDE_DIR="$env:RUNNER_TEMP/libcurl/include"
         set /A NINJA_JOBS=%NUMBER_OF_PROCESSORS%-1
