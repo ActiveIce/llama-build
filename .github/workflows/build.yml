@@ -19,12 +19,12 @@ jobs:
     - name: Setup cmake
       uses: jwlawson/actions-setup-cmake@master
     
-    - name: Install ccache
-      uses: ggml-org/ccache-action@main
-      with:
-        key: windows-cuda-12.4
-        variant: ccache
-        evict-old-files: 1d
+    #- name: Install ccache
+    #  uses: ggml-org/ccache-action@main
+    #  with:
+    #    key: windows-cuda-12.4
+    #    variant: ccache
+    #    evict-old-files: 1d
     
     - name: libCURL
       shell: powershell
