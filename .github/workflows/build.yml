@@ -66,7 +66,7 @@ jobs:
     - name: Build
       shell: cmd
       env:
-          CURL_PATH: ${{ steps.get_libcurl.outputs.curl_path }}
+        CURL_PATH: ${{ steps.get_libcurl.outputs.curl_path }}
       run: |
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
@@ -87,12 +87,16 @@ jobs:
         popd
 
     - name: Pack artifacts
+      env:
+        CURL_PATH: ${{ steps.get_libcurl.outputs.curl_path }}
       run: |
+        Copy-Item $env:CURL_PATH\bin\libcurl-x64.dll .\build\bin\Release\
+        Copy-Item "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\debug_nonredist\x64\Microsoft.VC143.OpenMP.LLVM\libomp140.x86_64.dll" .\build\bin\Release\
         robocopy "${{env.CUDA_PATH}}\bin\x64" ".\llama.cpp\build\bin\Release\" cudart64_*.dll cublas64_*.dll cublasLt64_*.dll
-        7z a llama-bin-win-cuda-x64.zip .\llama.cpp\build\bin\Release\*
+        #7z a llama-bin-win-cuda-x64.zip .\llama.cpp\build\bin\Release\*
 
     - name: Upload Cuda runtime
       uses: actions/upload-artifact@main
       with:
-        path: llama-bin-win-cuda-x64.zip
+        path: .\llama.cpp\build\bin\Release\*
         name: llama-bin-win-cuda-x64.zip
