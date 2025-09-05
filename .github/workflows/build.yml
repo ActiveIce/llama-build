@@ -86,8 +86,8 @@ jobs:
 
     - name: Pack artifacts
       run: |
-        $dst='.\build\bin\Release\'
+        $dst='.\llama.cpp\build\bin\Release\'
         robocopy "${{env.CUDA_PATH}}\bin" $dst cudart64_*.dll cublas64_*.dll cublasLt64_*.dll
         robocopy "${{env.CUDA_PATH}}\lib" $dst cudart64_*.dll cublas64_*.dll cublasLt64_*.dll
-        ls .\build\bin\Release\
-        #7z a llama-bin-win-cuda-${{ matrix.cuda }}-x64.zip .\build\bin\Release\ggml-cuda.dll
+        ls .\llama.cpp\build\bin\Release\
+        #7z a llama-bin-win-cuda-${{ matrix.cuda }}-x64.zip .\llama.cpp\build\bin\Release\ggml-cuda.dll
