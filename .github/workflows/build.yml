@@ -63,6 +63,8 @@ jobs:
     
     - name: Build
       shell: cmd
+      env:
+          CURL_PATH: ${{ steps.get_libcurl.outputs.curl_path }}
       run: |
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
@@ -75,7 +77,7 @@ jobs:
           -DGGML_CUDA=ON ^
           -DGGML_CUDA_FORCE_CUBLAS=ON ^
           -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;100-virtual;120-real" ^
-          -DCURL_LIBRARY="$env:RUNNER_TEMP/libcurl/lib/libcurl.dll.a" -DCURL_INCLUDE_DIR="$env:RUNNER_TEMP/libcurl/include" ^
+          -DCURL_LIBRARY="%CURL_PATH%/lib/libcurl.dll.a" -DCURL_INCLUDE_DIR="%CURL_PATH%/include" ^
           -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_TOOLS=ON -DLLAMA_BUILD_SERVER=ON -DGGML_RPC=ON
         set /A NINJA_JOBS=%NUMBER_OF_PROCESSORS%-1
         cmake --build build --config Release -j %NINJA_JOBS%
