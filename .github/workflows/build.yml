@@ -74,7 +74,7 @@ jobs:
           -DCMAKE_TOOLCHAIN_FILE=cmake/x64-windows-llvm.cmake ^
           -DGGML_BACKEND_DL=ON ^
           -DGGML_NATIVE=OFF ^
-          -DGGML_CPU=OFF ^
+          -DGGML_CPU=ON ^
           -DGGML_CUDA=ON ^
           -DGGML_CUDA_FORCE_CUBLAS=ON ^
           -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;100-virtual;120-real" ^
