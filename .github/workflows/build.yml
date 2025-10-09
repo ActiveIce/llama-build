@@ -45,16 +45,22 @@ jobs:
       run: |
           $pkgs = @("cuda_cccl", "cuda_crt", "cuda_cudart", "cuda_nvcc", "libcublas", "libnvvm")
           $arch = "windows-x86_64"
-          $cuda_ver = "v" + ($env:CUDA_VERSION -replace '\.[^.]+$', '')
-          mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}"
+          $cuda_path = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v" + ($env:CUDA_VERSION -replace '\.[^.]+$', '')
+          mkdir -p $cuda_path
           choco install unzip -y
           $cuda_url = "https://developer.download.nvidia.com/compute/cuda/redist"
           curl -O "${cuda_url}/redistrib_${env:CUDA_VERSION}.json"
           $json = Get-Content "redistrib_${env:CUDA_VERSION}.json" | ConvertFrom-Json
           foreach ($pkg in $pkgs) {
             $rel_path = $json.$pkg.$arch.relative_path
-            curl -O "${cuda_url}/${rel_path}"
+            $url = "${cuda_url}/${rel_path}"
+            curl -O $url
+            $filename = Split-Path $url -Leaf
+            $prefix = $filename -replace '\.zip$', ''
+            unzip '${filename}' -d $cuda_path
+            xcopy "${cuda_path}\${prefix}\*" "${cuda_path}" /E /I /H /Y
           }
+          echo "CUDA_PATH=$cuda_path" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/windows-x86_64/cuda_cccl-windows-x86_64-13.0.85-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_crt/windows-x86_64/cuda_crt-windows-x86_64-13.0.88-archive.zip"
@@ -62,14 +68,14 @@ jobs:
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-13.0.88-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/libcublas/windows-x86_64/libcublas-windows-x86_64-13.1.0.3-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/libnvvm/windows-x86_64/libnvvm-windows-x86_64-13.0.88-archive.zip"
-          unzip '*.zip' -d "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}"
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cccl-windows-x86_64-13.0.85-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_crt-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cudart-windows-x86_64-13.0.96-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_nvcc-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libcublas-windows-x86_64-13.1.0.3-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libnvvm-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
-          echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          #unzip '*.zip' -d "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}"
+          #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cccl-windows-x86_64-13.0.85-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_crt-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_cudart-windows-x86_64-13.0.96-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\cuda_nvcc-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libcublas-windows-x86_64-13.1.0.3-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          #xcopy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\libnvvm-windows-x86_64-13.0.88-archive\*" "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0" /E /I /H /Y
+          #echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
     
     - name: Install Ninja
       run: |
