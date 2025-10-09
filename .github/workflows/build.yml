@@ -45,7 +45,7 @@ jobs:
       run: |
           $pkgs = @("cuda_cccl", "cuda_crt", "cuda_cudart", "cuda_nvcc", "libcublas", "libnvvm")
           $arch = "windows-x86_64"
-          $cuda_ver = "v" + ($CUDA_VER -replace '\.[^.]+$', '')
+          $cuda_ver = "v" + ($env:CUDA_VERSION -replace '\.[^.]+$', '')
           mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}"
           choco install unzip -y
           $cuda_url = "https://developer.download.nvidia.com/compute/cuda/redist"
