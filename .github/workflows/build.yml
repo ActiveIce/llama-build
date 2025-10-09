@@ -53,7 +53,7 @@ jobs:
           $json = Get-Content "redistrib_${env:CUDA_VERSION}.json" | ConvertFrom-Json
           foreach ($pkg in $pkgs) {
             $rel_path = $json.$pkg.$arch.relative_path
-            curl -O "${cuda_url}/${pkg}/${arch}/${rel_path}"
+            curl -O "${cuda_url}/${rel_path}"
           }
 
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/windows-x86_64/cuda_cccl-windows-x86_64-13.0.85-archive.zip"
