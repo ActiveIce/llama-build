@@ -57,8 +57,8 @@ jobs:
             curl -O $url
             $filename = Split-Path $url -Leaf
             $prefix = $filename -replace '\.zip$', ''
-            unzip '${filename}' -d $cuda_path
-            xcopy "${cuda_path}\${prefix}\*" "${cuda_path}" /E /I /H /Y
+            unzip $filename -d $cuda_path
+            xcopy "${cuda_path}\${prefix}\*" $cuda_path /E /I /H /Y
           }
           echo "CUDA_PATH=$cuda_path" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
