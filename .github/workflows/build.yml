@@ -54,6 +54,7 @@ jobs:
           foreach ($pkg in $pkgs) {
             $rel_path = $json.$pkg.$arch.relative_path
             curl -O "${cuda_url}/${pkg}/${arch}/${rel_path}"
+          }
 
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/windows-x86_64/cuda_cccl-windows-x86_64-13.0.85-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_crt/windows-x86_64/cuda_crt-windows-x86_64-13.0.88-archive.zip"
