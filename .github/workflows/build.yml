@@ -43,16 +43,17 @@ jobs:
       env:
         CUDA_VERSION: '13.0.2'
       run: |
-          pkgs=("cuda_cccl" "cuda_crt" "cuda_cudart" "cuda_nvcc" "libcublas" "libnvvm")
-          arch="windows-x86_64"
-          cuda_ver="v${env:CUDA_VERSION%.*}"
+          $pkgs = @("cuda_cccl", "cuda_crt", "cuda_cudart", "cuda_nvcc", "libcublas", "libnvvm")
+          $arch = "windows-x86_64"
+          $cuda_ver = "v" + ($CUDA_VER -replace '\.[^.]+$', '')
           mkdir -p "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\${cuda_ver}"
           choco install unzip -y
-          cuda_url="https://developer.download.nvidia.com/compute/cuda/redist/"
-          curl -O "${cuda_url}redistrib_${env:CUDA_VERSION}.json"
-          for pkg in "${PKGS[@]}"; do
-            rel_path=$(jq -r --arg pkg "$pkg" '.[$pkg][$arch].relative_path' "redistrib_${env:CUDA_VERSION}.json")
-            curl -O "${cuda_url}${pkg}/${arch}/${rel_path}"
+          $cuda_url = "https://developer.download.nvidia.com/compute/cuda/redist"
+          curl -O "${cuda_url}/redistrib_${env:CUDA_VERSION}.json"
+          $json = Get-Content "redistrib_${env:CUDA_VERSION}.json" | ConvertFrom-Json
+          foreach ($pkg in $pkgs) {
+            $rel_path = $json.$pkg.$arch.relative_path
+            curl -O "${cuda_url}/${pkg}/${arch}/${rel_path}"
 
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/windows-x86_64/cuda_cccl-windows-x86_64-13.0.85-archive.zip"
           #curl -O "https://developer.download.nvidia.com/compute/cuda/redist/cuda_crt/windows-x86_64/cuda_crt-windows-x86_64-13.0.88-archive.zip"
