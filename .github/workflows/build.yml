@@ -30,7 +30,7 @@ jobs:
       id: get_libcurl
       shell: powershell
       env:
-        CURL_VERSION: '8.15.0_7'
+        CURL_VERSION: '8.17.0_4'
         ARCHITECTURE: 'win64'
       run: |
         curl.exe -o $env:RUNNER_TEMP\curl.zip -L "https://curl.se/windows/dl-${env:CURL_VERSION}/curl-${env:CURL_VERSION}-${env:ARCHITECTURE}-mingw.zip"
@@ -41,7 +41,7 @@ jobs:
     - name: Install Cuda Toolkit
       shell: pwsh
       env:
-        CUDA_VERSION: '13.0.2'
+        CUDA_VERSION: '13.1.0'
       run: |
           $pkgs = @("cuda_cccl", "cuda_crt", "cuda_cudart", "cuda_nvcc", "libcublas", "libnvvm")
           $arch = "windows-x86_64"
