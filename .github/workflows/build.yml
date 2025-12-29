@@ -96,7 +96,7 @@ jobs:
           -DGGML_CPU=ON ^
           -DGGML_CUDA=ON ^
           -DGGML_CUDA_FORCE_CUBLAS=ON ^
-          -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;100-virtual;120-reala" ^
+          -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;100-virtual;120a-real" ^
           -DCURL_LIBRARY="%CURL_PATH%\lib\libcurl.dll.a" -DCURL_INCLUDE_DIR="%CURL_PATH%\include" ^
           -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_TOOLS=ON -DLLAMA_BUILD_SERVER=ON -DGGML_RPC=ON
         set /A NINJA_JOBS=%NUMBER_OF_PROCESSORS%-1
