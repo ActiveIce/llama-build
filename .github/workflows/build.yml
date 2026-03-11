@@ -41,7 +41,7 @@ jobs:
     - name: Install Cuda Toolkit
       shell: pwsh
       env:
-        CUDA_VERSION: '13.1.1'
+        CUDA_VERSION: '13.2.0'
       run: |
           $pkgs = @("cuda_cccl", "cuda_crt", "cuda_cudart", "cuda_nvcc", "libcublas", "libnvvm")
           $arch = "windows-x86_64"
