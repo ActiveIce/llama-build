@@ -84,7 +84,6 @@ jobs:
           -DGGML_OPENMP=ON ^
           -DGGML_CUDA=ON ^
           -DCMAKE_CUDA_ARCHITECTURES="75-virtual;80-virtual;86-virtual;89-real;90-virtual;120a-real;121a-virtual" ^
-          -DCURL_LIBRARY="%CURL_PATH%\lib\libcurl.dll.a" -DCURL_INCLUDE_DIR="%CURL_PATH%\include" ^
           -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_TOOLS=ON -DLLAMA_BUILD_SERVER=ON -DGGML_RPC=ON
         set /A NINJA_JOBS=%NUMBER_OF_PROCESSORS%-1
         cmake --build build --config Release -j %NINJA_JOBS%
