@@ -74,6 +74,7 @@ jobs:
       run: |
         git clone https://github.com/ggml-org/llama.cpp --depth 1
         pushd llama.cpp
+        gh pr checkout 24423
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
         cmake -S . -B build -G "Ninja Multi-Config" ^
           -DCMAKE_TOOLCHAIN_FILE=cmake/x64-windows-llvm.cmake ^
